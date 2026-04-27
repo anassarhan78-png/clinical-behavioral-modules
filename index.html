@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Behavior Change Module | College of Medicine | KFU</title>
+    <!-- Google Fonts & simple reset -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            color: #1a2c3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+        }
+
+        /* header & navigation (scalable for future modules) */
+        .top-bar {
+            background: #0b2b3b;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .logo p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        .module-badge {
+            background: #e67e22;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .future-modules {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+        }
+        .future-modules span {
+            background: #1e4a62;
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            cursor: default;
+        }
+
+        /* main cards */
+        .section-card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            padding: 1.8rem 2rem;
+            transition: all 0.2s;
+        }
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            border-left: 6px solid #e67e22;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            color: #0b2b3b;
+        }
+        .subsection-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.8rem 0;
+            color: #1f5e7e;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        .hbm-card {
+            background: #fef9e6;
+            border-radius: 20px;
+            padding: 1.2rem;
+            border-left: 4px solid #e67e22;
+        }
+        .hbm-card strong {
+            color: #c25d00;
+        }
+        .case-quote {
+            background: #eef2f5;
+            padding: 1rem 1.4rem;
+            border-radius: 20px;
+            font-style: italic;
+            margin: 1rem 0;
+            border-left: 3px solid #e67e22;
+        }
+        .badge {
+            background: #e67e22;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        hr {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: #e2e8f0;
+        }
+        .qa-item {
+            background: #ffffff;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2edf2;
+            overflow: hidden;
+        }
+        .qa-question {
+            background: #f0f6fa;
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .qa-question:hover {
+            background: #e4eff5;
+        }
+        .qa-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.2s;
+            background: #fefefe;
+            border-top: 0px solid #e2edf2;
+        }
+        .qa-answer.show {
+            max-height: 600px;
+            padding: 1.5rem;
+            border-top: 1px solid #e2edf2;
+        }
+        .answer-content {
+            color: #1e3a4d;
+        }
+        .answer-content p {
+            margin: 0.75rem 0;
+        }
+        .correct {
+            color: #1f7b4d;
+            font-weight: 600;
+            background: #e0f2e9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .wrong {
+            color: #bc5a2c;
+            font-weight: 600;
+            background: #ffe6e0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #5a6e7c;
+            border-top: 1px solid #cbdbe0;
+            padding-top: 1.5rem;
+        }
+        button.toggle-icon {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #e67e22;
+        }
+        @media (max-width: 680px) {
+            .container { padding: 1rem; }
+            .section-card { padding: 1.2rem; }
+            .section-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="top-bar">
+    <div class="logo">
+        <h1>📘 College of Medicine</h1>
+        <p>King Faisal University | Behavioral Science Curriculum</p>
+    </div>
+    <div class="module-badge">📌 Active Module: Behavior Change</div>
+    <div class="future-modules">
+        <span>📚 Module 2 (Coming)</span>
+        <span>📚 Module 3+</span>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Case introduction: Mrs. Noor -->
+    <div class="section-card">
+        <div class="section-title">🧑‍🏫 Clinical Case: Mrs. Noor</div>
+        <div class="grid-2">
+            <div>
+                <p><strong>👤 Biographic Data</strong><br>Name: Noor | Age: 45 | Post-Graduate | Teacher</p>
+                <p><strong>🫀 Medical & Psychosocial:</strong> Heart disease, Diabetes, Worried & Stress.</p>
+                <p><strong>⚖️ Main Issue:</strong> Overweight → desires behavior change due to medical risks. Fears that heart disease is worsened by excess weight.</p>
+            </div>
+            <div class="case-quote">
+                💬 “I feel breathless while climbing stairs, so I feel I'm at risk.”<br>
+                💬 “It's difficult to control symptoms and high risk of complications. It also impacts work and family life.”<br>
+                💬 “Losing weight will reduce complications, improve sugar & heart health, and increase self-confidence.”
+            </div>
+        </div>
+    </div>
+
+    <!-- Core definitions: Behavior change -->
+    <div class="section-card">
+        <div class="section-title">🧠 What is Behavior Change?</div>
+        <p><strong>Definition:</strong> “Deliberate and systematic efforts to alter one or more behavioral patterns” with the goal of improving health and well-being.</p>
+        <p><strong>Stages:</strong> Awareness → Contemplation → Preparation → Action → Maintenance.</p>
+        <p><strong>Essential ingredients:</strong> Self-motivation, Support & Persistence.</p>
+        <div class="subsection-title">📌 Examples of Interventions</div>
+        <ul style="margin-left: 1.5rem;">
+            <li>Heavy smoking / sedentary lifestyle / obesity management</li>
+            <li>Reducing alcohol misuse</li>
+            <li>Stress, anxiety, depression reduction</li>
+            <li>Screening practices (e.g., breast cancer)</li>
+        </ul>
+    </div>
+
+    <!-- Health Belief Model (HBM) comprehensive -->
+    <div class="section-card">
+        <div class="section-title">📖 Health Belief Model (HBM)</div>
+        <div class="grid-2">
+            <div class="hbm-card"><strong>🔍 Perceived Susceptibility:</strong> Belief about risk of developing a health problem.<br> <span class="badge">Noor case:</span> “I feel breathless → I am at risk.”</div>
+            <div class="hbm-card"><strong>⚠️ Perceived Severity:</strong> Belief about seriousness & consequences.<br> <span class="badge">Noor:</span> “High risk of complications, impacts work & family.”</div>
+            <div class="hbm-card"><strong>✅ Perceived Benefits:</strong> Positive outcomes of action.<br> <span class="badge">Noor:</span> “Reduce complications, improve sugar & heart health, confidence.”</div>
+            <div class="hbm-card"><strong>🚧 Perceived Barriers:</strong> Obstacles that prevent action.<br> Lack of nutrition knowledge, hard to change habits, lack of time, family responsibilities, low motivation.</div>
+            <div class="hbm-card"><strong>🔔 Cues to Action:</strong> Triggers that prompt action.<br> Doctor’s advice, health status of relatives, TV programs about obesity complications.</div>
+            <div class="hbm-card"><strong>💪 Self-Efficacy:</strong> Belief in ability to perform behavior.<br> Noor: <em>“I am not sure if I could stick to any new diet and exercise routine”</em> → Low self-efficacy.</div>
+        </div>
+        <div class="subsection-title">✨ Ways to Improve Self-Efficacy</div>
+        <ul style="margin-left: 1.5rem;">
+            <li><strong>Personal accomplishment:</strong> small, achievable goals (e.g., walking 10 min daily).</li>
+            <li><strong>Vicarious experience:</strong> observing peers succeed.</li>
+            <li><strong>Verbal persuasion:</strong> encouragement from doctor/family.</li>
+        </ul>
+    </div>
+
+    <!-- Barriers Summary & Action Plan -->
+    <div class="section-card">
+        <div class="section-title">📉 Barriers & Action Plan (Noor)</div>
+        <div class="grid-2">
+            <div>
+                <h3 style="font-weight: 700; margin-bottom: 0.5rem;">🚫 Summary of Barriers</h3>
+                <ul>
+                    <li>Age 45 & gender-related expectations</li>
+                    <li>Lack of time / busy schedule (teacher, family)</li>
+                    <li>Unhealthy dietary habits, lack of nutrition knowledge</li>
+                    <li>Low motivation and low self-confidence</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="font-weight: 700; margin-bottom: 0.5rem;">📋 Action Plan (evidence-based)</h3>
+                <ul>
+                    <li>Work on motivation & positive attitude (motivational interviewing)</li>
+                    <li>Provide appropriate weight-loss guidelines (calorie deficit, portion control)</li>
+                    <li>Healthy eating plan + regular exercise schedule (150 min/week)</li>
+                    <li>Refer to Dietitian, Nutritionist & certified Gym trainer</li>
+                    <li>Shared decision-making & regular follow-ups</li>
+                </ul>
+            </div>
+        </div>
+        <div class="case-quote" style="margin-top: 1rem;">
+            🩺 <strong>Communication skills for physician:</strong> Open/closed questions, empathy, active listening, summarizing, clarification, eye contact & body language.
+        </div>
+        <div style="background: #eaf6f0; padding: 0.8rem 1.2rem; border-radius: 18px; margin-top: 1rem;">
+            💡 <strong>Conclusion from slides:</strong> Check patient understanding & involve patients in discussion (share-decision making) → enhances adherence.
+        </div>
+    </div>
+
+    <!-- ESSAY QUESTIONS SECTION with model answers (right/wrong reasoning) -->
+    <div class="section-card">
+        <div class="section-title">📝 Essay Questions & Model Answers</div>
+        <p style="margin-bottom: 1rem;">Click on any question to reveal a detailed professor-level answer, explaining why certain arguments are correct/incorrect.</p>
+        
+        <!-- Q1 -->
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAnswer(this)">
+                <span>1️⃣ Using the Health Belief Model, analyze Mrs. Noor’s perceived barriers and explain how a physician can address at least three of them to improve her weight management.</span>
+                <button class="toggle-icon">▼</button>
+            </div>
+            <div class="qa-answer">
+                <div class="answer-content">
+                    <p><span class="correct">✅ Model Answer (Key Components):</span> Mrs. Noor’s perceived barriers include: <strong>(a) Lack of knowledge about nutrition/exercise</strong>, <strong>(b) difficulty changing eating habits (emotional/behavioral inertia)</strong>, <strong>(c) lack of time due to family/work responsibilities</strong>, and <strong>(d) low self-efficacy/motivation</strong>.</p>
+                    <p><strong>🔹 Addressing barriers (specific strategies):</strong><br>
+                    - <em>Knowledge deficit:</em> Provide simple, culturally tailored dietary guidelines (plate method) and a written walking plan; refer to a nutritionist.<br>
+                    - <em>Time constraints:</em> Prescribe “micro-workouts” (10–15 min sessions) and meal-prep strategies; incorporate family involvement.<br>
+                    - <em>Low self-efficacy:</em> Use graded tasks (start with 5-min daily walk); celebrate small accomplishments; verbal persuasion by doctor (“I believe you can succeed”).<br>
+                    - <em>Difficulty changing habits:</em> Use motivational interviewing to explore ambivalence, set SMART goals, and link changes to personal values (improved heart health, better role as teacher/mother).</p>
+                    <p><span class="wrong">❌ Common mistake:</span> Only telling Noor “you must lose weight” without exploring barriers leads to failure. Ignoring family responsibilities or assuming she has full control underestimates contextual factors. A correct approach systematically reduces each barrier using evidence-based counseling.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAnswer(this)">
+                <span>2️⃣ Differentiate between perceived susceptibility and perceived severity using Mrs. Noor’s statements. Why are both necessary to trigger behavior change?</span>
+                <button class="toggle-icon">▼</button>
+            </div>
+            <div class="qa-answer">
+                <div class="answer-content">
+                    <p><span class="correct">✅ Correct analysis:</span> <strong>Perceived susceptibility</strong> = “I feel breathless while climbing stairs, so I feel I'm at risk” → personal vulnerability to complications (heart attack, worsening diabetes). <strong>Perceived severity</strong> = “It's difficult to control symptoms and high risk of complications. It also impacts work and family life” → belief that the condition is serious, with significant consequences.</p>
+                    <p><strong>Why both needed?</strong> A person might feel susceptible (e.g., “I could get sick”) but if they perceive the illness as mild (low severity), they may not act. Conversely, high severity without personal susceptibility (e.g., “heart disease is terrible but it won’t happen to me”) also reduces motivation. Optimal health action requires <strong>high perceived susceptibility + high perceived severity</strong> to generate threat, which then makes perceived benefits outweigh barriers.</p>
+                    <p><span class="wrong">❌ Incorrect reasoning:</span> Some might claim that only severity matters. In reality, evidence from HBM shows both dimensions independently predict preventive behavior (e.g., weight loss, medication adherence). Noor’s case exemplifies synergism: she recognizes both vulnerability and gravity, which creates readiness – but barriers still hamper action if not addressed.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAnswer(this)">
+                <span>3️⃣ Mrs. Noor states low self-efficacy: “I am not sure if I could stick to any new diet and exercise routine.” As a physician, describe three evidence-based techniques (derived from slide 19) to enhance her self-efficacy. Justify why each works.</span>
+                <button class="toggle-icon">▼</button>
+            </div>
+            <div class="qa-answer">
+                <div class="answer-content">
+                    <p><span class="correct">✅ Gold-standard methods:</span></p>
+                    <p><strong>1. Personal accomplishment (mastery experiences):</strong> Design tiny achievable goals – e.g., “drink 2 extra glasses of water daily” or “walk 5 minutes after lunch”. Success builds confidence. <em>Why works?</em> Direct performance attainment is the most potent source of self-efficacy (Bandura).</p>
+                    <p><strong>2. Vicarious experience (observational learning):</strong> Share stories of similar patients (age 45, teacher) who successfully lost weight with lifestyle changes. Group sessions or video testimonials. <em>Why works?</em> Seeing peers succeed raises belief “If they can, I can.”</p>
+                    <p><strong>3. Verbal persuasion & encouragement:</strong> Use empathetic, specific reinforcement (“You already reduced sugar in tea – that’s a great start, I’m confident you can add one more small change”). Affirmation from a trusted physician increases self-belief. Additionally, involve family to provide encouragement. <em>Why works?</em> Social persuasion reduces self-doubt and reinforces effort.</p>
+                    <p><span class="wrong">❌ Mistakes to avoid:</span> Overwhelming with complex meal plans (failure → decreased self-efficacy). Using generic “you can do it” without concrete strategies. False praise without achievable tasks also undermines credibility. Effective approach: combine mastery, modeling, and realistic persuasion.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAnswer(this)">
+                <span>4️⃣ What role do “cues to action” play in the Health Belief Model? Identify three potential cues for Mrs. Noor and explain how a doctor can intentionally introduce new cues.</span>
+                <button class="toggle-icon">▼</button>
+            </div>
+            <div class="qa-answer">
+                <div class="answer-content">
+                    <p><span class="correct">✅ Role of cues to action:</span> They are triggers that prompt the individual to take the recommended health action, converting intention into behavior. Without cues, even high perceived threat and benefits may remain dormant.</p>
+                    <p><strong>Existing cues for Noor (from slides):</strong><br>
+                    - Doctor’s advice (crucial trigger).<br>
+                    - Health status of friends/relatives (seeing complications).<br>
+                    - TV programs about obesity complications.<br>
+                    <strong>Additional intentional cues a physician can introduce:</strong><br>
+                    1️⃣ <strong>Written action plan & prescription pad:</strong> Provide a “lifestyle prescription” with specific walking minutes and follow-up date.<br>
+                    2️⃣ <strong>Text message reminders/WhatsApp prompts:</strong> “Daily tip” or motivational message via clinic system.<br>
+                    3️⃣ <strong>Environmental prompts:</strong> Encourage Noor to place her walking shoes by the door, set alarms, or use a step counter with daily goal. Schedule a follow-up appointment in 2 weeks (commitment cue).</p>
+                    <p><span class="wrong">❌ Common error:</span> Believing that internal motivation alone is sufficient. Research shows that environmental and social triggers (cues) dramatically improve initiation and maintenance. Passive advice without follow-up cue rarely changes behavior.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q5: comprehensive clinical reasoning -->
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAnswer(this)">
+                <span>5️⃣ Considering Noor’s comorbid conditions (heart disease, diabetes) and stress, propose a stepwise behavior change intervention integrating the stages of change (Transtheoretical Model).</span>
+                <button class="toggle-icon">▼</button>
+            </div>
+            <div class="qa-answer">
+                <div class="answer-content">
+                    <p><span class="correct">✅ Integrated model answer:</span> Noor is in the <strong>contemplation/preparation stage</strong> (she acknowledges need but ambivalent and lacks confidence).<br>
+                    <strong>Step 1 (Contemplation):</strong> Explore pros/cons, validate worries, provide personalized risk (HbA1c, cardiac risk score).<br>
+                    <strong>Step 2 (Preparation):</strong> Collaborate on a small action plan: e.g., replace one sugary drink, or walk 10 min/day for 1 week. Connect her with a dietitian and coach – reduce barriers.<br>
+                    <strong>Step 3 (Action):</strong> Initiate moderate lifestyle changes; use self-monitoring (food diary, pedometer). Address stress via mindfulness or brief relaxation techniques.<br>
+                    <strong>Step 4 (Maintenance):</strong> Regular follow-ups every 2-4 weeks, problem-solve relapses, and strengthen social support (family involvement).<br>
+                    <strong>Integration with HBM:</strong> At each step, emphasize benefits (improved cardiac function), reduce barriers (time-savvy recipes), enhance self-efficacy by celebrating small successes.</p>
+                    <p><span class="wrong">❌ Pitfalls:</span> Skipping preparation stage or pushing for action too early leads to failure. Ignoring stress may sabotage eating behaviors. A hierarchical approach combining stages, self-efficacy, and comorbidity management yields sustainable change.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional notes: communication summary -->
+    <div class="section-card">
+        <div class="section-title">🩺 Clinical Communication Summary</div>
+        <p>Effective doctor-patient communication for behavior change: use <strong>open-ended questions</strong> (“What concerns you most about your weight?”), demonstrate <strong>empathy</strong> (acknowledge difficulty), practice <strong>active listening</strong>, and <strong>summarize</strong> key points. Shared decision-making increases adherence. Always assess readiness and tailor action plans accordingly.</p>
+        <p style="margin-top: 0.6rem;"><strong>📌 Final take-home message (From slide 22):</strong> Check patient understanding and involve patients in discussion → successful behavior change.</p>
+    </div>
+
+    <div class="footer-note">
+        📖 Module: Behavior Change | Based on KFU College of Medicine curriculum | Scalable for upcoming modules (Mental Health, Chronic Diseases, etc.)<br>
+        © 2025 | Educational resource for medical students & faculty
+    </div>
+</div>
+
+<script>
+    function toggleAnswer(element) {
+        // find parent .qa-item and then .qa-answer
+        const qaItem = element.closest('.qa-item');
+        const answerDiv = qaItem.querySelector('.qa-answer');
+        const icon = element.querySelector('.toggle-icon');
+        if (answerDiv.classList.contains('show')) {
+            answerDiv.classList.remove('show');
+            if(icon) icon.textContent = '▼';
+        } else {
+            answerDiv.classList.add('show');
+            if(icon) icon.textContent = '▲';
+        }
+    }
+    // optional: open first answer as example? not needed but smooth
+    // ensure all answers initially hidden
+    document.querySelectorAll('.qa-answer').forEach(ans => ans.classList.remove('show'));
+</script>
+</body>
+</html>
