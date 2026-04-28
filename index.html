@@ -1,443 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Behavior Change Module | Dr. Saba Firdos | KFU</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>الوحدة التعليمية | كلية الطب</title>
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #eef2f8;
-            color: #1a2c3e;
-            line-height: 1.65;
-            padding: 30px 20px;
+        .module-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
-        h1 {
-            font-size: 2.1rem;
-            color: #0b5e7e;
-            border-left: 6px solid #e67e22;
-            padding-left: 1.2rem;
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        .module-card h3 {
+            color: #0b2b3b;
             margin-bottom: 0.5rem;
         }
-        .subhead {
-            color: #3a6b8c;
-            margin-bottom: 2rem;
-            padding-left: 1.8rem;
-        }
-        /* Slide card style */
-        .slide-card {
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
-            overflow: hidden;
-            transition: 0.2s;
-            border: 1px solid #e2edf2;
-        }
-        .slide-title {
-            background: #f0f6fa;
-            padding: 0.9rem 1.8rem;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #0b5e7e;
-            border-bottom: 2px solid #e67e22;
-        }
-        .eng-text {
-            padding: 1.2rem 1.8rem;
-            background: #fefdf7;
-            direction: ltr;
-            text-align: left;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
-            border-bottom: 1px solid #eee5cf;
-        }
-        .arabic-text {
-            padding: 1.2rem 1.8rem;
-            background: #fffbf0;
-            border-bottom: 1px solid #eee5cf;
-        }
-        .explanation-text {
-            padding: 1.2rem 1.8rem;
-            background: #f8fafd;
-            color: #2c3e4e;
-        }
-        .pronounce-btn {
-            background-color: #2c7da0;
-            border: none;
-            color: white;
-            border-radius: 40px;
-            padding: 0.2rem 1rem;
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            margin: 0.5rem 0.3rem 0.2rem;
+        .module-card a {
             display: inline-block;
-            transition: 0.2s;
-        }
-        .pronounce-btn:hover {
-            background-color: #1f5e7e;
-        }
-        h2 {
-            font-size: 1.7rem;
-            margin: 2rem 0 1rem;
-            color: #1f6e8c;
-            border-bottom: 2px solid #cbdde6;
-            padding-bottom: 0.4rem;
-        }
-        /* Glossary */
-        .glossary-row {
-            display: flex;
-            flex-wrap: wrap;
-            border-bottom: 1px solid #e2edf2;
-            padding: 0.9rem;
-            background: #fefcf7;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .term {
-            font-weight: 700;
-            width: 210px;
-            color: #1e6f5c;
-        }
-        .def {
-            flex: 2;
-            font-size: 0.9rem;
-            color: #2c3e50;
-        }
-        .ar-term {
-            width: 180px;
-            font-weight: 500;
-            color: #b45f1b;
-        }
-        /* Essay */
-        .essay-item {
-            background: #f9fafc;
-            border: 1px solid #cfdfe8;
-            border-radius: 20px;
-            margin: 1.5rem 0;
-        }
-        .essay-question {
-            background: #e6f0f5;
-            padding: 1rem 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            border-radius: 20px 20px 0 0;
-        }
-        .model-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-            padding: 0 1.5rem;
-            background: white;
-            border-top: 0px solid #cfdfe8;
-        }
-        .model-answer.show {
-            max-height: 1000px;
-            padding: 1.5rem;
-            border-top: 1px solid #cfdfe8;
-        }
-        .correct-badge {
-            background: #2c7a4d;
-            color: white;
-            border-radius: 20px;
-            padding: 0.15rem 0.7rem;
-            font-size: 0.7rem;
-            display: inline-block;
-            margin-right: 0.5rem;
-        }
-        .wrong-badge {
-            background: #bc5a2c;
-            color: white;
-            border-radius: 20px;
-            padding: 0.15rem 0.7rem;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            font-size: 0.75rem;
-            color: #6c7a89;
-            border-top: 1px solid #dce5ec;
-            padding-top: 1.5rem;
-        }
-        .student-name {
-            background: #e6f4ea;
-            display: inline-block;
-            padding: 0.4rem 1.5rem;
-            border-radius: 40px;
-            font-weight: 700;
-            color: #0b5e7e;
             margin-top: 1rem;
-        }
-        @media (max-width: 700px) {
-            .slide-title, .eng-text, .arabic-text, .explanation-text { padding: 1rem; }
+            background: #e67e22;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>🧠 Behavior Change in Clinical Practice</h1>
-    <div class="subhead">Dr. Saba Firdos | Dept. of Clinical Neuroscience | Case: Mrs. Noor (45y, teacher, heart disease, diabetes, overweight)</div>
-
-    <!-- ================== SLIDES AS CARDS (each slide = one card) ================== -->
-
-    <!-- SLIDE 1-2 -->
-    <div class="slide-card">
-        <div class="slide-title">📌 Slides 1–2: Introduction</div>
-        <div class="eng-text">Behavior change – Dr. Saba Firdos – Assistant Professor – Dept. Clinical Neuroscience</div>
-        <div class="arabic-text">تغيير السلوك – د. صبا فردوس – أستاذ مساعد – قسم علم الأعصاب السريري</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> This lecture introduces the core principles of behavior change in medical settings. Dr. Firdos specializes in the intersection of brain function and behavior. Understanding how habits are formed neurally helps clinicians design effective interventions. The department emphasizes evidence‑based strategies to modify lifestyle factors contributing to chronic diseases. For medical students, mastering behavior change theories is essential for patient counseling.</div>
-        <button class="pronounce-btn" onclick="speakFemale('behavior change')">🔊 behavior change</button>
-        <button class="pronounce-btn" onclick="speakFemale('clinical neuroscience')">🔊 clinical neuroscience</button>
+<div class="top-bar">
+    <div class="logo">
+        <h1>📘 كلية الطب | جامعة الملك فيصل</h1>
+        <p>المنهج التفاعلي – العلوم السلوكية</p>
     </div>
-
-    <!-- SLIDE 3 -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 3: Biographic Data</div>
-        <div class="eng-text">Name: Mrs. Noor<br>Age: 45<br>Educational Background: Post-Graduate<br>Profession: Teacher<br>Medical and Psychosocial history: heart disease, diabetes, worried & stress</div>
-        <div class="arabic-text">الاسم: السيدة نور – العمر: 45 – المؤهل: دراسات عليا – المهنة: معلمة – التاريخ الطبي والنفسي: مرض قلب، سكري، قلقة ومتوترة</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Mrs. Noor is a well‑educated professional, which typically improves health literacy but may also increase awareness of risks, potentially elevating anxiety. Her comorbidities (heart disease + diabetes) significantly elevate cardiovascular risk. Chronic stress and worry are common in metabolic syndrome, as cortisol dysregulation promotes central obesity and insulin resistance. Psychosocial factors must be assessed as they directly impact motivation and self‑efficacy for behavior change.</div>
-        <button class="pronounce-btn" onclick="speakFemale('heart disease')">🔊 heart disease</button>
-        <button class="pronounce-btn" onclick="speakFemale('diabetes')">🔊 diabetes</button>
-        <button class="pronounce-btn" onclick="speakFemale('psychosocial')">🔊 psychosocial</button>
-        <button class="pronounce-btn" onclick="speakFemale('comorbidities')">🔊 comorbidities</button>
-    </div>
-
-    <!-- SLIDE 4 -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 4: Main Health Issue / Reason for contact</div>
-        <div class="eng-text">She is overweight. She wants to change her behavior because of the medical condition. She is worried and believes that heart disease is a serious illness contributed to by being overweight.</div>
-        <div class="arabic-text">تعاني من السمنة. تريد تغيير سلوكها بسبب حالتها الطبية. قلقة وتعتقد أن أمراض القلب مرض خطير تسببه السمنة.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Noor’s primary motivation stems from fear of worsening cardiac disease. This “perceived threat” is a strong driver according to the Health Belief Model. Being overweight (BMI ≥30) with diabetes and hypertension creates a synergistic risk for heart failure and atherosclerosis. Her worry is constructive if channeled correctly. The physician must validate her concern and use it to build a collaborative action plan without inducing paralyzing anxiety.</div>
-        <button class="pronounce-btn" onclick="speakFemale('overweight')">🔊 overweight</button>
-        <button class="pronounce-btn" onclick="speakFemale('perceived threat')">🔊 perceived threat</button>
-    </div>
-
-    <!-- SLIDE 5-6 -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slides 5-6: What is Behavior Change?</div>
-        <div class="eng-text">"Deliberate and systematic efforts to alter one or more behavioral patterns" with the goal of improving health and well-being (Prochaska, Redding, & Evers, 2008, p.3). Stages: awareness → contemplation → preparation → action → maintenance. Requires self‑motivation, support, and persistence.</div>
-        <div class="arabic-text">"جهود مقصودة ومنهجية لتعديل نمط سلوكي واحد أو أكثر" بهدف تحسين الصحة والعافية. المراحل: الوعي، التفكير، التحضير، الفعل، المحافظة. يتطلب دافعاً ذاتياً، دعماً، واستمرارية.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Behavior change is a process, not a single event. The Transtheoretical Model (TTM) describes five stages; relapse is common and should be anticipated. Self‑motivation refers to internal drive rather than external pressure. Support can come from family, healthcare teams, or peer groups. Persistence acknowledges that lasting behavioral change takes months or years. For Mrs. Noor, she is likely in the contemplation stage (ambivalent), requiring strategies that enhance benefits and reduce barriers before moving to preparation.</div>
-        <button class="pronounce-btn" onclick="speakFemale('deliberate')">🔊 deliberate</button>
-        <button class="pronounce-btn" onclick="speakFemale('contemplation')">🔊 contemplation</button>
-        <button class="pronounce-btn" onclick="speakFemale('preparation')">🔊 preparation</button>
-        <button class="pronounce-btn" onclick="speakFemale('maintenance')">🔊 maintenance</button>
-        <button class="pronounce-btn" onclick="speakFemale('self motivation')">🔊 self‑motivation</button>
-    </div>
-
-    <!-- SLIDE 7 -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 7: Examples of Behavior Change Interventions</div>
-        <div class="eng-text">Heavy smoker, sedentary lifestyle, obesity and other health issues, reducing drinking & alcoholism, reduction in stress, anxiety, depression, use of screening practices (e.g., breast cancer), use of better or safer practices.</div>
-        <div class="arabic-text">المدخن الشره، نمط الحياة الخامل، السمنة ومشاكل صحية أخرى، تقليل الشرب والإدمان، تقليل التوتر والقلق والاكتئاب، استخدام الفحوصات الدورية (مثل سرطان الثدي)، استخدام ممارسات أفضل أو أكثر أماناً.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Interventions target both prevention and disease management. Smoking cessation reduces cardiovascular mortality by 36% within 2 years. Sedentary behavior independently increases all‑cause mortality even among those who exercise. For Noor, multiple behaviors (diet, physical activity, stress management) should be addressed simultaneously. Screening practices like mammography or colonoscopy are underutilized; cues to action (e.g., physician reminder) significantly improve uptake.</div>
-        <button class="pronounce-btn" onclick="speakFemale('sedentary lifestyle')">🔊 sedentary lifestyle</button>
-        <button class="pronounce-btn" onclick="speakFemale('screening practices')">🔊 screening practices</button>
-        <button class="pronounce-btn" onclick="speakFemale('alcoholism')">🔊 alcoholism</button>
-    </div>
-
-    <!-- SLIDE 8-10: HBM -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slides 8-10: Health Belief Model (HBM)</div>
-        <div class="eng-text">Perceived susceptibility, perceived severity, perceived benefits, perceived barriers, cues to action, self-efficacy.</div>
-        <div class="arabic-text">المعتقد بالتعرض، المعتقد بالخطورة، المعتقد بالفوائد، المعتقد بالعوائق، مثيرات العمل، الكفاءة الذاتية.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> The Health Belief Model (Rosenstock, 1966) explains why people adopt or reject health behaviors. Each construct:<br>
-        - <strong>Susceptibility</strong>: subjective risk.<br>
-        - <strong>Severity</strong>: belief about seriousness.<br>
-        - <strong>Benefits</strong>: perceived effectiveness of action.<br>
-        - <strong>Barriers</strong>: costs or obstacles.<br>
-        - <strong>Cues to action</strong>: triggers (internal or external).<br>
-        - <strong>Self-efficacy</strong>: confidence (added later by Bandura).<br>
-        For Noor: high susceptibility, severity, and benefits are present, but barriers (time, knowledge) and low self-efficacy hinder action. Interventions should first address barriers, then build self-efficacy.</div>
-        <button class="pronounce-btn" onclick="speakFemale('perceived susceptibility')">🔊 susceptibility</button>
-        <button class="pronounce-btn" onclick="speakFemale('perceived severity')">🔊 severity</button>
-        <button class="pronounce-btn" onclick="speakFemale('perceived benefits')">🔊 benefits</button>
-        <button class="pronounce-btn" onclick="speakFemale('perceived barriers')">🔊 barriers</button>
-        <button class="pronounce-btn" onclick="speakFemale('cues to action')">🔊 cues to action</button>
-        <button class="pronounce-btn" onclick="speakFemale('self efficacy')">🔊 self‑efficacy</button>
-    </div>
-
-    <!-- SLIDE 13: Perceived susceptibility (Noor) -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 13: Perceived susceptibility – Mrs. Noor</div>
-        <div class="eng-text">"Do you believe that being overweight puts you at risk for developing health problems?" – "I am overweight, I am regularly feeling breathlessness when I climb stairs, so yes, I feel that I am more at risk."</div>
-        <div class="arabic-text">"هل تعتقدين أن الوزن الزائد يعرضك لمشاكل صحية؟" – "أنا أعاني من السمنة، أشعر بضيق التنفس عند صعود الدرج، لذلك أشعر أني أكثر عرضة للخطر."</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Breathlessness on exertion is a classic symptom of deconditioning but can also indicate early heart failure or myocardial ischemia. Noor accurately links this symptom to her weight, demonstrating high perceived susceptibility. This is a strong motivational factor. The physician should validate this perception ("You are right to be concerned") and use it as leverage to discuss preventive actions.</div>
-        <button class="pronounce-btn" onclick="speakFemale('breathlessness')">🔊 breathlessness</button>
-        <button class="pronounce-btn" onclick="speakFemale('susceptibility')">🔊 susceptibility</button>
-    </div>
-
-    <!-- SLIDE 14: Perceived severity -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 14: Perceived severity – Mrs. Noor</div>
-        <div class="eng-text">"Being overweight makes it harder to control my symptoms, increases my risk of complications, and has a negative impact on my life, work, and family."</div>
-        <div class="arabic-text">"السمنة تجعل السيطرة على أعراضي أصعب، وتزيد خطر المضاعفات، وتؤثر سلباً على حياتي وعملي وعائلتي."</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Noor describes multiple severe consequences: difficulty controlling symptoms (dyspnea, blood glucose), increased complications (heart attack, stroke, neuropathy), and psychosocial impact. This high perceived severity further enhances her readiness. However, excessive severity without self‑efficacy can lead to fear and avoidance. The physician must balance severity messaging with confidence‑building.</div>
-        <button class="pronounce-btn" onclick="speakFemale('complications')">🔊 complications</button>
-        <button class="pronounce-btn" onclick="speakFemale('severity')">🔊 severity</button>
-    </div>
-
-    <!-- SLIDE 15: Perceived benefits -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 15: Perceived benefits – Mrs. Noor</div>
-        <div class="eng-text">"Losing weight will decrease health complications, manage my blood sugar and heart health, make me feel good and confident, improve my professional and personal life."</div>
-        <div class="arabic-text">"إنقاص الوزن سيقلل المضاعفات الصحية، يضبط سكري وقلبي، يجعلني أشعر بالرضا والثقة، يحسن حياتي المهنية والشخصية."</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Noor clearly articulates multiple benefits: medical (glycemic control, cardiovascular), psychological (confidence), and social (work, family). This is ideal; high perceived benefits increase motivation. The physician should reinforce these benefits and help her envision success.</div>
-        <button class="pronounce-btn" onclick="speakFemale('quality of life')">🔊 quality of life</button>
-    </div>
-
-    <!-- SLIDE 17: Cues to action -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 17: Cues to action – Mrs. Noor</div>
-        <div class="eng-text">"My doctor at first, family members, some friends' health condition, television show for overweight complications, frequent talk with a friend."</div>
-        <div class="arabic-text">"طبيبي أولاً، أفراد العائلة، الحالة الصحية لبعض الأصدقاء، برنامج تلفزيوني عن مضاعفات السمنة، مناقشات متكررة مع صديق."</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Multiple external cues are already influencing Noor: physician advice (most powerful), family and friends' health deterioration, media, and social discussion. The physician can intentionally introduce additional cues: written lifestyle prescription, text message reminders, environmental prompts (e.g., placing walking shoes by the door).</div>
-        <button class="pronounce-btn" onclick="speakFemale('cues to action')">🔊 cues to action</button>
-    </div>
-
-    <!-- SLIDE 18: Low self-efficacy -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 18: Low self-efficacy – Mrs. Noor</div>
-        <div class="eng-text">"I am not sure if I could stick to any new diet and exercise routine. Unable to control barriers. Lack of patience and confidence. No proper information. She doesn't believe she can do it."</div>
-        <div class="arabic-text">"لست متأكدة أني سألتزم بأي حمية أو روتين رياضي جديد. غير قادرة على تخطي العوائق. قلة الصبر والثقة. لا توجد معلومات كافية. هي لا تؤمن بأنها تستطيع."</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Low self-efficacy is the most critical barrier. Noor expresses doubt about her ability to adhere, lack of information, and impatience. Without addressing this, even high motivation will fail. Strategies: set tiny achievable goals (personal accomplishment), share success stories of similar patients (vicarious experience), and provide specific verbal encouragement.</div>
-        <button class="pronounce-btn" onclick="speakFemale('low self efficacy')">🔊 low self‑efficacy</button>
-    </div>
-
-    <!-- SLIDE 19: Improving self-efficacy -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 19: If self-efficacy is low – what next?</div>
-        <div class="eng-text">Personal accomplishment, vicarious experience or observation, verbal persuasion.</div>
-        <div class="arabic-text">الإنجاز الشخصي، التجربة غير المباشرة (المشاهدة)، الإقناع اللفظي.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Based on Bandura's social cognitive theory, these three strategies are evidence‑based:<br>
-        - <strong>Personal accomplishment</strong>: start with a 5‑minute daily walk; each success builds confidence.<br>
-        - <strong>Vicarious experience</strong>: show videos of women similar to Noor who lost weight successfully.<br>
-        - <strong>Verbal persuasion</strong>: physician says "You already reduced sugar in tea – that's a great start. I'm confident you can add a 5‑minute walk."</div>
-        <button class="pronounce-btn" onclick="speakFemale('personal accomplishment')">🔊 personal accomplishment</button>
-        <button class="pronounce-btn" onclick="speakFemale('vicarious experience')">🔊 vicarious experience</button>
-        <button class="pronounce-btn" onclick="speakFemale('verbal persuasion')">🔊 verbal persuasion</button>
-    </div>
-
-    <!-- SLIDE 20: Factors affecting behavior change -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 20: Factors which affect behavior change</div>
-        <div class="eng-text">Age, gender, lack of time and no clear guidelines, mismanagement, inappropriate attitude, barriers like busy schedule, family responsibility and lack of family support, psychological and emotional barriers, culture, lack of exercise, unhealthy diet, lack of motivation and confidence.</div>
-        <div class="arabic-text">العمر، الجنس، ضيق الوقت وغياب إرشادات واضحة، سوء الإدارة، موقف غير مناسب، عوائق مثل الجدول المزدحم، المسؤوليات العائلية ونقص الدعم الأسري، حواجز نفسية وعاطفية، الثقافة، قلة التمارين، نظام غذائي غير صحي، نقص الحافز والثقة.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> This comprehensive list includes demographic, environmental, psychological, and cultural determinants. For Noor: age (perimenopausal changes), lack of time (teacher + family responsibilities), lack of clear guidelines, low family support, and low confidence are prominent. Interventions must be tailored to address these specific barriers.</div>
-        <button class="pronounce-btn" onclick="speakFemale('barriers')">🔊 barriers</button>
-    </div>
-
-    <!-- SLIDE 21: Setting goals -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 21: Setting goals for management</div>
-        <div class="eng-text">Work on motivation and attitude (to improve self-efficacy), appropriate information and guidelines to lose healthy weight, provide time management, healthy eating plan & regular exercise schedule, contact to experts (dietitians, nutritionist & gym trainer), suggested to join weight management program.</div>
-        <div class="arabic-text">العمل على التحفيز والموقف لتحسين الكفاءة الذاتية، معلومات وإرشادات مناسبة لخسارة وزن صحي، توفير إدارة الوقت، خطة أكل صحي وجدول تمارين منتظم، الاتصال بخبراء (أخصائيو تغذية ومدربين)، اقتراح الانضمام لبرنامج إدارة الوزن.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> A multidisciplinary action plan: improve motivation via motivational interviewing; provide written guidelines; teach time management (e.g., meal prep, short workouts); refer to a dietitian and certified trainer; consider structured programs (e.g., lifestyle modification programs). Shared decision‑making ensures patient buy‑in.</div>
-        <button class="pronounce-btn" onclick="speakFemale('weight management')">🔊 weight management</button>
-    </div>
-
-    <!-- SLIDE 22-23: Communication -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slides 22-23: Communication skills & ending consultation</div>
-        <div class="eng-text">Checking time to time patient understanding, involving patients in discussion (shared decision-making), follow up. Ending consultation with greeting.</div>
-        <div class="arabic-text">التحقق من فهم المريض بين الحين والآخر، إشراك المريض في المناقشة (اتخاذ القرار المشترك)، متابعة. إنهاء الاستشارة بتحية.</div>
-        <div class="explanation-text"><strong>📖 Detailed explanation:</strong> Effective communication is essential for behavior change. Teach‑back method checks understanding. Shared decision‑making improves adherence. Regular follow‑up (telephone, in‑person) reinforces progress. Ending with a positive greeting maintains rapport.</div>
-        <button class="pronounce-btn" onclick="speakFemale('shared decision making')">🔊 shared decision making</button>
-        <button class="pronounce-btn" onclick="speakFemale('follow up')">🔊 follow up</button>
-    </div>
-
-    <!-- SLIDE 25: Thank you -->
-    <div class="slide-card">
-        <div class="slide-title">📄 Slide 25: Thank you</div>
-        <div class="eng-text">Thank you</div>
-        <div class="arabic-text">شكراً</div>
-        <div class="explanation-text"><strong>📖 Summary:</strong> Behavior change is a process guided by models like HBM and TTM. Assess all constructs, address low self-efficacy, use communication skills, and follow up.</div>
-    </div>
-
-    <!-- ===================== MEDICAL GLOSSARY (English → English definition → Arabic) ===================== -->
-    <h2>📚 Medical Glossary (English term + English definition + Arabic translation)</h2>
-    <div class="glossary-row"><div class="term">Behavior change</div><div class="def">Deliberate, systematic efforts to alter behavioral patterns to improve health.</div><div class="ar-term">تغيير السلوك</div><button class="pronounce-btn" onclick="speakFemale('behavior change')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Perceived susceptibility</div><div class="def">Belief about personal risk of developing a health problem.</div><div class="ar-term">المعتقد باحتمال التعرض</div><button class="pronounce-btn" onclick="speakFemale('perceived susceptibility')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Perceived severity</div><div class="def">Belief about the seriousness of a condition and its consequences.</div><div class="ar-term">المعتقد بالخطورة</div><button class="pronounce-btn" onclick="speakFemale('perceived severity')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Perceived benefits</div><div class="def">Belief that a recommended action will reduce the health threat.</div><div class="ar-term">المعتقد بالفوائد</div><button class="pronounce-btn" onclick="speakFemale('perceived benefits')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Perceived barriers</div><div class="def">Belief about obstacles or costs of taking action.</div><div class="ar-term">المعتقد بالعوائق</div><button class="pronounce-btn" onclick="speakFemale('perceived barriers')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Cues to action</div><div class="def">Triggers that prompt health action.</div><div class="ar-term">مثيرات العمل</div><button class="pronounce-btn" onclick="speakFemale('cues to action')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Self-efficacy</div><div class="def">Confidence in one's ability to perform a specific behavior.</div><div class="ar-term">الكفاءة الذاتية</div><button class="pronounce-btn" onclick="speakFemale('self efficacy')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Sedentary lifestyle</div><div class="def">Low physical activity, prolonged sitting.</div><div class="ar-term">نمط حياة خامل</div><button class="pronounce-btn" onclick="speakFemale('sedentary lifestyle')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Vicarious experience</div><div class="def">Learning by observing others succeed.</div><div class="ar-term">تجربة غير مباشرة</div><button class="pronounce-btn" onclick="speakFemale('vicarious experience')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Verbal persuasion</div><div class="def">Encouragement from others to boost confidence.</div><div class="ar-term">الإقناع اللفظي</div><button class="pronounce-btn" onclick="speakFemale('verbal persuasion')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Personal accomplishment</div><div class="def">Mastering a task successfully, builds self-efficacy.</div><div class="ar-term">الإنجاز الشخصي</div><button class="pronounce-btn" onclick="speakFemale('personal accomplishment')">🔊</button></div>
-    <div class="glossary-row"><div class="term">Shared decision making</div><div class="def">Collaborative process where patient and clinician choose treatment together.</div><div class="ar-term">اتخاذ القرار المشترك</div><button class="pronounce-btn" onclick="speakFemale('shared decision making')">🔊</button></div>
-
-    <!-- ===================== ESSAY QUESTIONS WITH MODEL ANSWERS ===================== -->
-    <h2>📝 Essay Questions & Model Answers (with correct/incorrect analysis)</h2>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>1️⃣ Using the Health Belief Model, analyze Mrs. Noor's perceived barriers and low self-efficacy. Propose three strategies from slide 19 to improve her self-efficacy. Explain why each works.</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>Barriers:</strong> lack of time (teaching+family), lack of clear nutrition guidelines, low motivation.<br><strong>Low self-efficacy:</strong> "I am not sure if I could stick to any new diet."<br><strong>Strategies:</strong><br>1) <strong>Personal accomplishment</strong>: start with 5-min walk daily. <em>Why correct?</em> Mastery experience is the most powerful source of self-efficacy (Bandura).<br>2) <strong>Vicarious experience</strong>: show video of a similar woman who lost weight. <em>Why correct?</em> Seeing peers succeed raises belief "if she can, I can".<br>3) <strong>Verbal persuasion</strong>: "You already reduced sugar in tea – excellent first step. I am confident you can add a 5-min walk." <em>Why correct?</em> Specific encouragement from an authority figure reduces self-doubt.<br><span class="wrong-badge">❌ Common mistakes</span> Giving only generic advice ("just eat less") without addressing barriers; using fear alone; demanding drastic changes immediately – this lowers self-efficacy further.</p></div></div>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>2️⃣ Differentiate between perceived susceptibility and perceived severity using Mrs. Noor's own words. Why are both necessary to trigger behavior change?</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>Susceptibility (Noor):</strong> "I feel breathless climbing stairs, so I feel I am at risk." → belief of personal vulnerability.<br><strong>Severity (Noor):</strong> "It's difficult to control symptoms, high risk of complications, impacts work and family." → belief the condition has serious consequences.<br><strong>Why both needed?</strong> High susceptibility + low severity → "it's not that bad". High severity + low susceptibility → "it won't happen to me". Both must be high to create a perceived threat that motivates action. Example: a smoker who knows lung cancer is severe (high severity) but thinks "I only smoke occasionally, I won't get it" (low susceptibility) will not quit. Noor has both, but barriers remain.</p></div></div>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>3️⃣ Identify three cues to action currently influencing Mrs. Noor. As a physician, how would you introduce two additional cues?</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>Existing cues:</strong> 1) Doctor's advice, 2) Friends' deteriorating health, 3) TV program about obesity complications.<br><strong>New cues to introduce:</strong><br>1) Written "lifestyle prescription" with daily step goal and follow-up date.<br>2) Text message reminders (WhatsApp) 3x/week with motivational tips.<br>3) Environmental prompt: place walking shoes by the door, use step counter.<br><em>Why effective?</em> Cues convert intention into action; research shows reminders improve adherence by up to 40%.</p></div></div>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>4️⃣ Describe the stages of behavior change (Transtheoretical Model). Where would you place Mrs. Noor, and what intervention is appropriate?</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>Stages:</strong> Precontemplation → Contemplation → Preparation → Action → Maintenance.<br><strong>Noor's stage:</strong> Contemplation (acknowledges problem, ambivalent, not yet actively preparing). Some early preparation signs.<br><strong>Intervention:</strong> Motivational interviewing to explore pros/cons, provide personalized risk (HbA1c, cardiac risk), build self-efficacy, set a very small goal (e.g., one dietary swap). Avoid pushing full action prematurely.<br><span class="wrong-badge">❌ Mistake</span> Forcing an action plan during contemplation leads to resistance and dropout.</p></div></div>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>5️⃣ Explain the role of self-efficacy in behavior change. Give a clinical example (based on Noor) of how a physician can use "verbal persuasion" to enhance it.</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>Role:</strong> Self-efficacy determines effort and persistence when facing obstacles. High self-efficacy predicts better adherence.<br><strong>Example for Noor:</strong> Physician says: "You have successfully managed your teaching job and family for years – that takes discipline. I have seen many patients with similar doubts succeed by starting with one tiny change, like drinking an extra glass of water. I believe you can try that for one week."<br><em>Why effective?</em> Specific, realistic, linked to past success. Empty praise ("you can do it") without concrete plan is less effective.</p></div></div>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>6️⃣ Critically evaluate: "Mrs. Noor's high perceived susceptibility and severity are sufficient to guarantee behavior change."</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>False.</strong> HBM states that threat (susceptibility+severity) must be combined with high benefits, low barriers, strong cues, and high self-efficacy. Noor has actual barriers (time, knowledge) and low self-efficacy, which block action despite high threat. Many people know heart disease is serious and feel at risk yet fail to change because barriers outweigh benefits or self-efficacy is low. Threat alone is insufficient; coping appraisal (self-efficacy) is essential.</p></div></div>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>7️⃣ Design a brief intervention plan for Mrs. Noor integrating HBM constructs and communication skills from slides 11-12.</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>HBM constructs:</strong><br>1) <strong>Perceived benefits</strong>: discuss how 5% weight loss improves blood sugar and heart risk.<br>2) <strong>Perceived barriers</strong>: brainstorm solutions (meal prep, 10-min home workouts).<br>3) <strong>Self-efficacy</strong>: set weekly step goal increase of 500 steps.<br><strong>Communication skills:</strong> open-ended questions ("What concerns you most?"); summarization ("So you want to protect your heart but worry about failing – let's start very small."); shared decision-making (let her choose between two diet changes).</p></div></div>
-
-    <div class="essay-item"><div class="essay-question" onclick="toggleAnswer(this)"><span>8️⃣ Explain the difference between perceived barriers and low self-efficacy. Give one example of each from Noor's case.</span><span>▼</span></div><div class="model-answer"><span class="correct-badge">✅ Correct Answer</span><p><strong>Perceived barriers:</strong> external or internal obstacles. Example: "I have no time because of work and family." Solution: time management, shorter workouts.<br><strong>Low self-efficacy:</strong> lack of confidence even if barriers removed. Example: "I am not sure I could stick to any routine." Solution: mastery experiences, vicarious learning, verbal persuasion.<br><strong>Clinical distinction:</strong> Ask: "If we solved your time problem, would you be able to do it?" If yes → barrier; if still doubtful → self-efficacy deficit.</p></div></div>
-
-    <!-- footer with student name -->
-    <footer>
-        <div class="student-name">👨‍⚕️ Prepared by: Hussein Abbas Alabbad</div>
-        <p style="margin-top: 1.2rem;">© College of Medicine, King Faisal University – Behavioral Science Module<br>Based on the lecture by Dr. Saba Firdos, Dept. of Clinical Neuroscience. Case: Mrs. Noor.</p>
-    </footer>
+    <div class="module-badge">📚 وحدات قابلة للتوسع</div>
 </div>
-
+<div class="container">
+    <div class="section-card">
+        <div class="section-title">الوحدات التعليمية المتاحة</div>
+        <div id="modules-container" class="module-list">
+            <!-- سيتم تحميلها من config.json -->
+            <p>جاري التحميل...</p>
+        </div>
+    </div>
+</div>
 <script>
-    function speakFemale(text) {
-        if (!window.speechSynthesis) {
-            alert("Browser does not support speech synthesis.");
-            return;
-        }
-        window.speechSynthesis.cancel();
-        let utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.85;
-        utterance.pitch = 1.2;
-        let voices = window.speechSynthesis.getVoices();
-        let femaleVoice = voices.find(voice => 
-            voice.lang.startsWith('en') && 
-            (voice.name.includes('Google UK') || voice.name.includes('Samantha') || voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Microsoft') && voice.name.includes('Natural'))
-        );
-        if (femaleVoice) utterance.voice = femaleVoice;
-        window.speechSynthesis.speak(utterance);
-    }
-    window.speechSynthesis.getVoices();
-    
-    function toggleAnswer(element) {
-        let parent = element.closest('.essay-item');
-        let answerDiv = parent.querySelector('.model-answer');
-        let icon = element.querySelector('span:last-child');
-        if (answerDiv.classList.contains('show')) {
-            answerDiv.classList.remove('show');
-            if (icon) icon.innerHTML = '▼';
-        } else {
-            answerDiv.classList.add('show');
-            if (icon) icon.innerHTML = '▲';
-        }
-    }
+    fetch('config.json')
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('modules-container');
+            container.innerHTML = data.modules.map(mod => `
+                <div class="module-card">
+                    <h3>${mod.title_ar} (${mod.title})</h3>
+                    <p>${mod.description}</p>
+                    <a href="${mod.path}">الدخول للوحدة →</a>
+                </div>
+            `).join('');
+        })
+        .catch(err => {
+            document.getElementById('modules-container').innerHTML = '<p>حدث خطأ في تحميل البيانات</p>';
+        });
 </script>
+<div class="footer-note">
+    © كلية الطب – جامعة الملك فيصل | أضف وحدات جديدة عبر إدخالها في config.json
+</div>
 </body>
 </html>
