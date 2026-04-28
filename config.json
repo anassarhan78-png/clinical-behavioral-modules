@@ -13,6 +13,13 @@
       "title_ar": "التكيف مع المرض وإخبار الخبر السيئ",
       "path": "units/adaptation-to-illness/index.html",
       "description": "SPIKES model, quality of life, coping strategies, Mrs. Sonia (breast cancer)"
+    },
+    {
+      "id": "psychosocial-care",
+      "title": "Psychosocial Care in Medical Setting",
+      "title_ar": "الرعاية النفسية الاجتماعية في الأمراض المزمنة",
+      "path": "units/psychosocial-care/index.html",
+      "description": "Case of Mr. Mohammed Salim (diabetes, depression, cognitive errors: catastrophic thinking & arbitrary inference) – CBT interventions"
     }
   ]
 }
