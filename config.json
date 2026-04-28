@@ -1,0 +1,18 @@
+{
+  "modules": [
+    {
+      "id": "behavior-change",
+      "title": "Behavior Change",
+      "title_ar": "تغيير السلوك",
+      "path": "units/behavior-change/index.html",
+      "description": "Health Belief Model, case study of Mrs. Noor (overweight, heart disease, diabetes)"
+    },
+    {
+      "id": "adaptation-to-illness",
+      "title": "Adaptation to Illness & Breaking Bad News",
+      "title_ar": "التكيف مع المرض وإخبار الخبر السيئ",
+      "path": "units/adaptation-to-illness/index.html",
+      "description": "SPIKES model, quality of life, coping strategies, Mrs. Sonia (breast cancer)"
+    }
+  ]
+}
